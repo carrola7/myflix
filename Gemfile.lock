@@ -175,3 +175,9 @@ DEPENDENCIES
   thin
   uglifier
   vcr (= 2.9.3)
+
+RUBY VERSION
+   ruby 2.1.2p95
+
+BUNDLED WITH
+   1.16.6

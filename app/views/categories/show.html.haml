@@ -1,0 +1,10 @@
+%article.video_category
+  %h3.title= @category.name
+  - @category.videos.each_slice(6).to_a.each do |row|
+    .videos.row.buffer-top
+      - row.each do |video|
+        .video.col-sm-2
+          = link_to video_path video, nil do
+            %img(src="#{video.image_url_small}")
+
+    
