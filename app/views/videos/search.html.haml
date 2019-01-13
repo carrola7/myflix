@@ -1,0 +1,8 @@
+- @videos.each_slice(6).each do |row|
+  %article.video_category
+    .videos.row
+      - row.each do |video|
+        .video.col-sm-2
+          = link_to video_path video, nil do
+            %img(src="#{video.image_url_small}")
+  
