@@ -5,6 +5,7 @@ Myflix::Application.routes.draw do
   root to: 'sessions#index'
 
   get 'login', to: 'sessions#new'
+  get 'register', to: 'users#new'
 
   resources :videos, only: [:show] do
     collection do 
@@ -13,5 +14,7 @@ Myflix::Application.routes.draw do
   end
   
   resources :categories, only: [:show]
+  resources :sessions, only: [:create]
+  resources :users, only: [:new, :create]
  
 end
