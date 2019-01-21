@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     if @user.save
       flash[:notice] = "Welcome to MyFliX"
       session[:user_id] = @user.id
-      redirect_to root_path
+      redirect_to login_path
     else
       render :new
     end

@@ -1,4 +1,6 @@
 class VideosController < ApplicationController
+  before_action :ensure_logged_in
+
   def index
     @categories = Category.all
   end
