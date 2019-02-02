@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      flash[:notice] = "Welcome to MyFliX"
+      flash[:success] = "Welcome to MyFliX"
       session[:user_id] = @user.id
       redirect_to login_path
     else
