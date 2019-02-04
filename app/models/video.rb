@@ -1,5 +1,5 @@
 class Video < ActiveRecord::Base
-  has_many :reviews
+  has_many :reviews#, order: "created_at DESC"
   belongs_to :category
 
   validates_presence_of :title, :description
@@ -10,6 +10,7 @@ class Video < ActiveRecord::Base
   end
 
   def rating
+    return nil if reviews.size == 0
     ratings = reviews.map(&:rating).map(&:to_i)
     (ratings.reduce(&:+).to_f / ratings.size).round(1)
   end
