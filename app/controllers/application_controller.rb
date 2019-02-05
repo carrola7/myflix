@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
 
   def access_denied
     flash[:warning] = "You are not authorized to do that"
-    redirect_to root_path
+    redirect_to login_path
   end
 end

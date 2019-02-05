@@ -26,9 +26,9 @@ describe VideosController do
         @some_video = Fabricate(:video)
       end
 
-      it "redirects to root page" do
+      it "redirects to login page" do
         get :show, id: @some_video.id
-        response.should redirect_to root_path         
+        response.should redirect_to login_path         
       end
     end
   end
@@ -59,10 +59,10 @@ describe VideosController do
         @futurama = Fabricate(:video, title: "Futurama")
       end
 
-      it "redirects to root path" do
+      it "redirects to login path" do
         get :search, search: "rama"
 
-        response.should redirect_to root_path
+        response.should redirect_to login_path
       end
     end
   end

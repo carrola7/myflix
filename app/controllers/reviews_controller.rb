@@ -12,7 +12,6 @@ class ReviewsController < ApplicationController
       @video = @review.video.reload
       render 'videos/show'
     end
-
   end
 
   def review_params
