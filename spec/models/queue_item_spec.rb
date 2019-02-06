@@ -27,4 +27,22 @@ describe QueueItem do
       queue_item.rating.should eq(nil)
     end
   end
+
+  describe "#category_name" do
+    it "returns the category's name of the video" do
+      category = Fabricate(:category)
+      video = Fabricate(:video, category: category)
+      queue_item = Fabricate(:queue_item, video: video)
+      queue_item.category_name.should eq(category.name)
+    end
+  end
+
+  describe "#category" do
+    it "returns the category of the video" do
+      category = Fabricate(:category)
+      video = Fabricate(:video, category: category)
+      queue_item = Fabricate(:queue_item, video: video)
+      queue_item.category.should eq(category)
+    end
+  end
 end
