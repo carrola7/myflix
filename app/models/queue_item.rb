@@ -2,6 +2,8 @@ class QueueItem < ActiveRecord::Base
   belongs_to :user
   belongs_to :video
 
+  validates_presence_of :user_id, :video_id
+
   delegate :category, to: :video
   delegate :title, to: :video, prefix: :video
 
