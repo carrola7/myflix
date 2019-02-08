@@ -26,28 +26,47 @@ describe QueueItemsController do
         session[:user_id] = alice.id
       end
       it "creates a new queue item" do
-        post :create, queue_item: Fabricate.attributes_for(:queue_item, video: video)
+        post :create, video_id: video.id
         QueueItem.count.should eq(1)
       end
       it "increments the position for a second queue item" do
         video_2 = Fabricate(:video)
-        post :create, queue_item: Fabricate.attributes_for(:queue_item, video: video)
-        post :create, queue_item: Fabricate.attributes_for(:queue_item, video: video_2)
+        post :create, video_id: video.id
+        post :create, video_id: video_2.id
         QueueItem.last.position.should eq(2)
       end
-        
-
       it "redirects to the my_queue page" do
-        post :create, queue_item: Fabricate.attributes_for(:queue_item, video: video)
+        post :create, video_id: video.id
         response.should redirect_to my_queue_path
       end
+      it "creates the queue item that is associated with the video" do
+        post :create, video_id: video.id
+        QueueItem.first.video.title.should eq(video.title)
+      end
+      it "creates the queue item that is associated with the signed in user" do
+        post :create, video_id: video.id
+        QueueItem.first.user.should eq(alice)
+      end
+      it "puts the video as the last one in the queue" do
+        Fabricate(:queue_item, video: video, user: alice)
+        south_park = Fabricate(:video)
+        post :create, video_id: south_park.id
+        south_park_queue_item = QueueItem.find_by(video_id: south_park.id, user_id: alice.id)
+        south_park_queue_item.position.should eq(2)
+      end
+      it "does not add the video to the queue if the video is already in the queue" do
+        Fabricate(:queue_item, video: video, user: alice)
+        post :create, video_id: video.id
+        alice.queue_items.count.should eq(1)
+      end
+
     end
 
     context "for unauthenticated users" do
       let(:alice) { Fabricate(:user) }
       let(:video) { Fabricate(:video) }
       it "redirects to the sign in page" do
-        post :create, queue_item: Fabricate.attributes_for(:queue_item, video: video)
+        post :create, video: video
         response.should redirect_to(login_path)
       end
     end
