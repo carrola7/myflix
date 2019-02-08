@@ -12,6 +12,11 @@ class QueueItemsController < ApplicationController
     end
   end
 
+  def destroy
+    remove_queue_item
+    redirect_to my_queue_path
+  end
+
   private
 
   def queue_item_params
@@ -20,5 +25,10 @@ class QueueItemsController < ApplicationController
 
   def next_postition
     QueueItem.count + 1
+  end
+
+  def remove_queue_item
+    queue_item = QueueItem.find_by(id: params[:id], user_id: current_user.id)
+    queue_item && queue_item.destroy
   end
 end
