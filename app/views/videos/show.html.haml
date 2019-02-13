@@ -23,7 +23,7 @@
       = bootstrap_form_for [@video, @review] do |f|
         .row
           .col-sm-3
-            = f.select "rating", options_for_select(["5", "4", "3", "2", "1"].map { |r| [r + (r.to_i > 1 ? " Stars" : " Star"), r]}), class: "span6"
+            = f.select "rating", options_for_video_ratings, class: "span6"
         .row
           .col-sm-8
             = f.text_area :comment, label: "Write a Review", rows: 6, class: "span6"

@@ -15,17 +15,19 @@ class QueueItemsController < ApplicationController
     queue_item = QueueItem.find_by(id: params[:id], user_id: current_user.id)
     if queue_item
       queue_item.destroy
-      update_positions_by_position
+      current_user.normalize_queue_item_positions
     end
     redirect_to my_queue_path
   end
 
   def update_all
-    #binding.pry
-    QueueItem.transaction do
-      update_positions_from_params
-      raise ActiveRecord::Rollback if duplicate_positions?
-      update_positions_by_position
+    begin
+      QueueItem.transaction do
+        update_queue_items
+        current_user.normalize_queue_item_positions
+      end
+    rescue ActiveRecord::RecordInvalid
+      flash[:danger] = "Invalid inputs"
     end
     
     redirect_to my_queue_path
@@ -45,27 +47,20 @@ class QueueItemsController < ApplicationController
     current_user.queue_items.map(&:video).include?(video)
   end
 
-  def update_remaining_positions
-    QueueItem.where("position > ?", find_queue_position).each do |queue_item|
-      queue_item.position = queue_item.position - 1
-      queue_item.save
-    end
-  end
+  
 
-  def find_queue_position
-    QueueItem.find_by(id: params[:id], user_id: current_user.id).position
-  end
-
-  def update_positions_by_position
-    current_user.queue_items.order(:position).each_with_index do |queue_item, index|
-      queue_item.update(position: index + 1)
-    end
-  end
-
-  def update_positions_from_params
+  def update_queue_items
     params[:queue_items].each do |queue_item_params|
       queue_item = QueueItem.find(queue_item_params[:id])
-      queue_item.update(position: queue_item_params[:position]) if queue_item.user == current_user
+      if queue_item.user == current_user
+        review = current_user.review_for queue_item.video
+        if review
+          review.update_attributes!(rating: queue_item_params[:rating])
+        elsif queue_item_params[:rating] != ""
+          Review.create(rating: queue_item_params[:rating], comment: "No comment added", user: current_user, video: queue_item.video)
+        end
+        queue_item.update_attributes!(position: queue_item_params[:position])
+      end
     end
   end
 

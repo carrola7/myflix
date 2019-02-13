@@ -14,4 +14,5 @@ class Video < ActiveRecord::Base
     ratings = reviews.map(&:rating).map(&:to_i)
     (ratings.reduce(&:+).to_f / ratings.size).round(1)
   end
+
 end

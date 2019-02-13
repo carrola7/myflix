@@ -16,4 +16,5 @@ class QueueItem < ActiveRecord::Base
   def category_name
     category.name
   end
+
 end
