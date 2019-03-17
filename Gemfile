@@ -31,6 +31,7 @@ group :test do
   gem 'vcr', '2.9.3'
   gem 'fabrication'
   gem 'faker'
+  gem 'capybara'
 end
 
 group :production do

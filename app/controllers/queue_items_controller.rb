@@ -53,12 +53,7 @@ class QueueItemsController < ApplicationController
     params[:queue_items].each do |queue_item_params|
       queue_item = QueueItem.find(queue_item_params[:id])
       if queue_item.user == current_user
-        review = current_user.review_for queue_item.video
-        if review
-          review.update_attributes!(rating: queue_item_params[:rating])
-        elsif queue_item_params[:rating] != ""
-          Review.create(rating: queue_item_params[:rating], comment: "No comment added", user: current_user, video: queue_item.video)
-        end
+        queue_item.rating = queue_item_params[:rating]
         queue_item.update_attributes!(position: queue_item_params[:position])
       end
     end

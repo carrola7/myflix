@@ -13,9 +13,8 @@
         %p= @video.description
         .actions
           %a.btn.btn-primary(href="") Watch Now
-          = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default'
-          -# = form_for [@video, QueueItem.new] do |f|
-          -#   = f.submit "+ My Queue", class: "btn btn-default"
+          - unless already_queued?(@video)
+            = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default'
 
 %section.reviews.container
   .row

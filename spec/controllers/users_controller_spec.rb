@@ -3,9 +3,7 @@ require 'spec_helper'
 describe UsersController do
   describe "GET new" do
     it "sets the @user variable" do
-
       get :new 
-
       (assigns :user).should be_instance_of User 
     end
   end
@@ -18,7 +16,6 @@ describe UsersController do
       it "saves a new user" do
         User.count.should eq(1)
       end
-
       it "redirects to the sign in page" do
         response.should redirect_to login_path
       end

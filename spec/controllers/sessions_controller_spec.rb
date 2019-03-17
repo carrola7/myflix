@@ -38,15 +38,12 @@ describe SessionsController do
     end
 
     context "with invalid credentials" do
-      before do
-        @user = Fabricate(:user)
-        post :create, email: @user.email, password: @user.password + "a"
+      let(:alice) { Fabricate(:user) }
+      it_behaves_like "requires_signed_in_user" do
+        let(:action) { post :create, email: alice.email, password: alice.password + "a" }
       end
-      it "redirects to login path" do
-        response.should redirect_to(login_path)
-      end
-
       it "sets the message" do
+        post :create, email: alice.email, password: alice.password + "a"
         flash[:danger].should == "There was a problem with your username or password"
       end
     end

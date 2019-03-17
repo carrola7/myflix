@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe VideosController do
   describe "GET show" do
+    it_behaves_like "requires_signed_in_user" do
+      let(:action) { get :show, id: Fabricate(:video).id }
+    end
     context "with authenticated users" do
       before do
         session[:user_id] = Fabricate(:user).id
@@ -19,24 +22,12 @@ describe VideosController do
         response.should render_template :show
       end
     end
-
-    context "with unauthenticated users" do
-      before do
-        session.delete(:user_id)
-        @some_video = Fabricate(:video)
-      end
-
-      it "redirects to login page" do
-        get :show, id: @some_video.id
-        response.should redirect_to login_path         
-      end
-    end
   end
 
   describe "GET search" do
     context "with authenticated users" do
       before do
-        session[:user_id] = Fabricate(:user).id
+        set_current_user
         @futurama = Fabricate(:video, title: "Futurama")
       end
   
