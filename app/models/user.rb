@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   has_secure_password validations: false
   has_many :reviews
   has_many :queue_items
+  has_many :relationships, foreign_key: 'follower_id', dependent: :destroy
+  has_many :following, through: :relationships, source: :followed
 
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: {minimum: 5}
@@ -17,4 +19,15 @@ class User < ActiveRecord::Base
     reviews.find_by(video_id: video.id)
   end
 
+  def follow(other_user)
+    following << other_user
+  end
+
+  def unfollow(other_user)
+    following.delete(other_user)
+  end
+
+  def following?(other_user)
+    following.include?(other_user)
+  end
 end
