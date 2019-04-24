@@ -23,6 +23,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-nav'
   gem 'rspec-rails', '2.99'
+  gem 'faker'
 end
 
 group :test do
@@ -30,7 +31,6 @@ group :test do
   gem 'shoulda-matchers', '2.7.0'
   gem 'vcr', '2.9.3'
   gem 'fabrication'
-  gem 'faker'
   gem 'capybara'
 end
 

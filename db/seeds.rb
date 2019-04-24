@@ -28,6 +28,23 @@
 #                image_url_small: "/tmp/south_park.jpg")
 # end
 
-Category.create(name: "Comedy")
-Category.create(name: "Animation")
-Category.create(name: "Family")
+# Category.create(name: "Comedy")
+# Category.create(name: "Animation")
+# Category.create(name: "Family")
+
+# 10.times do |n|
+#   User.create(email: "user_#{n}@gmail.com",
+#               password: "password",
+#               full_name: Faker::Name.name)
+# end
+
+users = User.all
+target_users = users[1..2]
+target_users.each do |user|
+  following = users[2..15]
+  followers = users[3..10]
+  following.each { |followed| user.follow(followed) }
+  followers.each { |follower| follower.follow(user) }
+end
+
+
