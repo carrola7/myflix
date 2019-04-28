@@ -8,6 +8,9 @@ Myflix::Application.routes.draw do
   get 'sign_out', to: 'sessions#destroy'
   get 'register', to: 'users#new'
   get 'my_queue', to: 'queue_items#index'
+  get 'forgot_password', to: 'password_requests#new'
+  get 'confirm_password_request', to: 'password_requests#confirm'
+  get 'invalid_token', to: 'password_requests#invalid_token'
 
   resources :videos, only: [:show] do
     collection do 
@@ -29,5 +32,6 @@ Myflix::Application.routes.draw do
       put 'update_all', to: 'queue_items#update_all'
     end
   end
+  resources :password_requests, only: [:create, :show, :update]
  
 end

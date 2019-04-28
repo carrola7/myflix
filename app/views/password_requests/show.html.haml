@@ -1,0 +1,13 @@
+%section.reset_password.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = form_tag({ controller: 'password_requests', action: 'update'}, method: :put) do
+        %header
+          %h1 Reset Your Password
+        %fieldset.form-group
+          %label(for="password") New Password
+          .row
+            .col-sm-4
+              %input.form-control(type="password" name="password")
+        %fieldset.form-group.action
+          %input(type="submit" value="Reset Password" class="btn btn-default")
