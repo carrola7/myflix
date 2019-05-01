@@ -1,0 +1,13 @@
+!!! 5
+%html(lang="en-US")
+  %body
+    %p
+      ="Hi #{@invite.name},"
+    %p
+      = "#{@invite.sender.full_name} has invited you to join MyFlix with the following message"
+    %em
+      = @invite.message
+    %p 
+      Please click on the link below to register:
+    %p
+      = link_to 'click here to join', invitation_url(@invite)
