@@ -10,14 +10,37 @@ describe UsersController do
 
   describe "POST create" do
     context "with valid input" do
-      before do
-        post :create, user: Fabricate.attributes_for(:user)
-      end
       it "saves a new user" do
+        post :create, user: Fabricate.attributes_for(:user)
         User.count.should eq(1)
       end
       it "redirects to the sign in page" do
+        post :create, user: Fabricate.attributes_for(:user)
         response.should redirect_to login_path
+      end
+      it "follows another user if invited to join" do
+        bob = Fabricate(:user)
+        alice = Fabricate.attributes_for(:user)
+        Fabricate(:invitation, sender: bob, email: alice[:email])
+        post :create, user: alice
+        alice = User.find_by(email: alice[:email])
+        expect(alice.following?(bob)).to be_true
+      end
+      it "is followed by another user if invited to join" do
+        bob = Fabricate(:user)
+        alice = Fabricate.attributes_for(:user)
+        Fabricate(:invitation, sender: bob, email: alice[:email])
+        post :create, user: alice
+        alice = User.find_by(email: alice[:email])
+        expect(bob.following?(alice)).to be_true
+      end
+      it "expires the invitation on fulfillment" do
+        bob = Fabricate(:user)
+        alice = Fabricate.attributes_for(:user)
+        Fabricate(:invitation, sender: bob, email: alice[:email])
+        post :create, user: alice
+        alice = User.find_by(email: alice[:email])
+        expect(Invitation.count).to eq(0)
       end
     end
 

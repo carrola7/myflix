@@ -12,6 +12,8 @@ feature 'user_resets_password' do
     open_email('joe@example.com')
   end
 
+  after { clear_email }
+
   scenario 'checking for content' do
     expect(current_email).to have_content "Hi #{User.first.full_name}"
   end
