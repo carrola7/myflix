@@ -7,4 +7,7 @@ describe Invitation do
   it {should validate_presence_of :email}
   it {should validate_uniqueness_of :email}
 
+  it_behaves_like "tokenable" do
+    let(:model) { Fabricate(:invitation) }
+  end
 end

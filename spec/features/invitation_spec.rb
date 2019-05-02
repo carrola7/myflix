@@ -28,6 +28,7 @@ feature 'invitation' do
     user_signs_in(bob)
     click_people
     expect(page).to have_content("Joe Bloggs")
+    clear_email
   end
 
   def invite_friend
