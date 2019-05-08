@@ -13,7 +13,7 @@ class InvitationsController < ApplicationController
       redirect_to people_path
     elsif @invitation.save
       flash[:success] = "Your invitation has been sent"
-      AppMailer.send_invitation(@invitation).deliver
+      AppMailer.delay.send_invitation(@invitation)
       redirect_to people_path
     else
       flash.now[:warning] = "There was a problem with your inputs"

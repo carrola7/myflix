@@ -12,6 +12,8 @@ gem 'pg', '~> 0.11'
 gem 'bcrypt-ruby', '~> 3.1.2' 
 gem 'bootstrap_form'
 gem 'rake', '< 11.0'
+gem 'sidekiq', '~> 4.0'
+gem 'unicorn'
 
 group :development do
   gem 'thin'
