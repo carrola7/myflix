@@ -1,0 +1,18 @@
+%section.admin_add_video
+  .container
+    .row
+      .col-md-10.col-md-offset-1
+        = bootstrap_form_for [:admin, @video], html: {multipart: true}, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-6" do |f|
+          %ul.nav.nav-tabs
+            %li
+              %a(href="/ui/admin_views_payments") Recent Payments
+            %li.active
+              %a(href="") Add a New Video
+          %br
+          %fieldset
+            = f.text_field :title
+            = f.select :category_id, Category.all.map { |c| [c.name, c.id] } 
+            = f.text_area :description
+            = f.file_field :large_cover, label: "Large Cover"
+            = f.file_field :small_cover, label: "Small Cover"
+            = f.submit "Add a Video"

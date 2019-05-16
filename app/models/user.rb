@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
     self.following.include?(other_user)
   end
 
+  def admin?
+    !!self.admin
+  end
+
   private
 
   def fulfill_invitation

@@ -4,6 +4,9 @@ class Video < ActiveRecord::Base
 
   validates_presence_of :title, :description
 
+  mount_uploader :large_cover, LargeCoverUploader
+  mount_uploader :small_cover, SmallCoverUploader
+
   def self.search_by_title(query)
     return [] if query.blank?
     Video.where("lower(title) LIKE ?", "%#{query.downcase}%").order("created_at DESC")

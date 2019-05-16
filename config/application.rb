@@ -1,8 +1,14 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+# require 'carrierwave'
+#require 'carrierwave/orm/activerecord'
 
 Bundler.require(:default, Rails.env)
+
+Raven.configure do |config|
+  config.dsn = 'https://a32eec24dea249aaa8a4d8dc98d57872:926668dfefca40909eb8b8b4b88ec589@sentry.io/1454849'
+end
 
 module Myflix
   class Application < Rails::Application

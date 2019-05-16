@@ -14,6 +14,10 @@ gem 'bootstrap_form'
 gem 'rake', '< 11.0'
 gem 'sidekiq', '~> 4.0'
 gem 'unicorn'
+gem "sentry-raven"
+gem 'carrierwave', '~> 1.0'
+gem 'mini_magick'
+gem 'fog-aws'
 
 group :development do
   gem 'thin'
