@@ -23,3 +23,8 @@ def user_signs_in(user = nil)
   fill_in "Password", with: "password"
   click_button "Sign in"
 end
+
+def admin_signs_in(admin = nil)
+  admin = admin || Fabricate(:admin, password: "password")
+  user_signs_in(admin)
+end

@@ -1,10 +1,23 @@
+%script(src="https://js.stripe.com/v3/")
+
 %section.register.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for @user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-6" do |f|
+      = bootstrap_form_for @user, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-6", html: { id: "payment-form" } do |f|
         %header
           %h1 Register
         = f.email_field :email, label: "Email Address"
         = f.password_field :password
         = f.text_field :full_name, label: "Full Name"
-        = f.submit "Sign Up", class: "btn btn-default col-sm-offset-2"
+        .ml-5
+        %fieldset.credit_card
+          .form-group
+            %label.control-label.col-sm-2(for="card-element") Credit Card
+            .col-sm-6 
+              %div#card-element.form-control
+            %div#card-errors(role="alert")
+        %fieldset.actions.control-group.col-sm-offset-2
+          .controls
+            %input(type="submit" value="Sign Up" class="btn btn-default")
+
+= javascript_include_tag 'payment.js'

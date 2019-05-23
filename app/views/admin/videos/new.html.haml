@@ -13,6 +13,10 @@
             = f.text_field :title
             = f.select :category_id, Category.all.map { |c| [c.name, c.id] } 
             = f.text_area :description
-            = f.file_field :large_cover, label: "Large Cover"
-            = f.file_field :small_cover, label: "Small Cover"
-            = f.submit "Add a Video"
+            = f.file_field :large_cover, class: "btn btn-file", label: "Large Cover"
+            = f.file_field :small_cover, class: "btn btn-file", label: "Small Cover"
+            = f.text_field :video_url, class: "span3", label: "Video URL"
+
+          %fieldset.actions.control-group.ml-25
+            .controls
+              = f.submit "Add a Video"

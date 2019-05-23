@@ -5,9 +5,16 @@ class UsersController < ApplicationController
   end
 
   def create
+    binding.pry
     @user = User.new(user_params)
 
     if @user.save
+      Stripe::Charge.create({
+        amount: 999,
+        currency: 'eur',
+        source: params[:stripeToken],
+        description: "Charge for #{@user.email}",
+      })
       AppMailer.notify_on_signup(@user).deliver
       flash[:success] = "Welcome to MyFliX"
       session[:user_id] = @user.id

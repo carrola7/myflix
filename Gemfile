@@ -18,6 +18,7 @@ gem "sentry-raven"
 gem 'carrierwave', '~> 1.0'
 gem 'mini_magick'
 gem 'fog-aws'
+gem 'stripe'
 
 group :development do
   gem 'thin'

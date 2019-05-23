@@ -38,5 +38,6 @@ Myflix::Application.routes.draw do
   end
   resources :password_requests, only: [:create, :show, :update]
   resources :invitations, only: [:new, :create, :show]
+  resources :charges, only: [:new, :create]
  
 end

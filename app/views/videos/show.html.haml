@@ -12,7 +12,7 @@
             %span=  "No rating yet"
         %p= @video.description
         .actions
-          %a.btn.btn-primary(href="") Watch Now
+          %a.btn.btn-primary(href="#{@video.video_url}") Watch Now
           - unless already_queued?(@video)
             = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default'
 
