@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
+ruby '2.3.1'
 
 gem 'bootstrap-sass', '3.1.1.1'
 gem 'coffee-rails'
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.2'
 gem 'haml-rails'
 gem 'sass-rails'
 gem 'uglifier'
@@ -38,9 +38,12 @@ group :test do
   gem 'database_cleaner', '1.4.1'
   gem 'shoulda-matchers', '2.7.0'
   gem 'vcr', '2.9.3'
+  gem 'webmock'
   gem 'fabrication'
   gem 'capybara'
   gem 'capybara-email'
+  gem 'selenium-webdriver'
+  gem 'geckodriver-helper'
 end
 
 group :production do

@@ -16,3 +16,8 @@
 
 # Ignore the database.yml file
 config/database.yml
+
+# Ignore image file uploads
+
+public/uploads/**/*
+

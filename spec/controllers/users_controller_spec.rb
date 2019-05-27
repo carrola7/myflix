@@ -10,6 +10,7 @@ describe UsersController do
 
   describe "POST create" do
     context "with valid input" do
+      before { StripeWrapper::Charge.stub(:create) }
       it "saves a new user" do
         post :create, user: Fabricate.attributes_for(:user)
         User.count.should eq(1)
@@ -61,6 +62,7 @@ describe UsersController do
     end
 
     context "email sending" do
+      before { StripeWrapper::Charge.stub(:create) }
       after { ActionMailer::Base.deliveries.clear }
       it "sends out the email" do
         post :create, user: Fabricate.attributes_for(:user)

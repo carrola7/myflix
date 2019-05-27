@@ -12,7 +12,6 @@ feature 'Admin adds a video' do
     visit home_path
 
     find("a[@href='/videos/#{Video.first.id}']").click
-    save_and_open_page
     expect(page).to have_link(nil, href: 'https://s3-eu-west-1.amazonaws.com/myflix-storage/HW3+watch+video.mp4')
   end
 end

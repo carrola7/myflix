@@ -7,8 +7,9 @@ feature 'invitation' do
 
   after { clear_email }
 
-  scenario 'user sends out an invitation and has it fulfilled' do
-    bob = Fabricate(:user, password: "password")
+  scenario 'user sends out an invitation and has it fulfilled',  {js: true, vcr: true} do
+    StripeWrapper::Charge.stub(:create)
+    bob = Fabricate(:user, email: 'joe@joe.com', password: "password")
     user_signs_in(bob)
     invite_friend
     open_mail
@@ -20,6 +21,7 @@ feature 'invitation' do
     clear_email
     expect(find('#user_email').value).to eq('joe@example.com')
     fill_in_sign_up_form
+    sleep 2
     open_mail
     expect(current_email).to have_content "Hi Joe Bloggs"
     click_people
@@ -40,6 +42,7 @@ feature 'invitation' do
   end
 
   def sign_out
+    find('a.dropdown-toggle').click
     click_link('Sign Out')
   end
 
@@ -50,6 +53,14 @@ feature 'invitation' do
   def fill_in_sign_up_form
     fill_in(:user_password, with: 'password')
     fill_in(:user_full_name, with: 'Joe Bloggs')
+    within_frame(find('iframe')) do
+      #find('form.ElementsApp').click
+      find('input[name="cardnumber"]').set('4000000000000002')
+      find('input[name="exp-date"]').set('0122')
+      find('input[name="cvc"]').set('123')
+      find('input[name="postal"]').set('12345')
+
+    end
     click_button('Sign Up')
   end
 
