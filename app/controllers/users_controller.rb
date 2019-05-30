@@ -6,16 +6,22 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      StripeWrapper::Charge.create({
+    if @user.valid?
+      charge = StripeWrapper::Charge.create({
         amount: 999,
         source: params[:stripeToken],
         description: "Charge for #{@user.email}",
       })
-      AppMailer.notify_on_signup(@user).deliver
-      flash[:success] = "Welcome to MyFliX"
-      session[:user_id] = @user.id
-      redirect_to login_path
+      if charge.successful?
+        @user.save
+        AppMailer.notify_on_signup(@user).deliver
+        flash[:success] = "Welcome to MyFliX"
+        session[:user_id] = @user.id
+        redirect_to login_path
+      else
+      flash.now[:danger] = charge.error_message
+      render :new
+      end
     else
       render :new
     end

@@ -6,10 +6,8 @@
       .video_info.col-sm-3
         %header
           %h3= @video.title
-          - if @video.rating
-            %span=  "Rating: #{@video.rating}/5"
-          - else
-            %span=  "No rating yet"
+          %span  Rating:
+          = @video.rating
         %p= @video.description
         .actions
           %a.btn.btn-primary(href="#{@video.video_url}") Watch Now
