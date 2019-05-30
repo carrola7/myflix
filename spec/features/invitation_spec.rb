@@ -8,7 +8,8 @@ feature 'invitation' do
   after { clear_email }
 
   scenario 'user sends out an invitation and has it fulfilled',  {js: true, vcr: true} do
-    StripeWrapper::Charge.stub(:create)
+    charge = double(charge, successful?: true)
+    StripeWrapper::Charge.stub(:create).and_return(charge)
     bob = Fabricate(:user, email: 'joe@joe.com', password: "password")
     user_signs_in(bob)
     invite_friend
@@ -54,12 +55,10 @@ feature 'invitation' do
     fill_in(:user_password, with: 'password')
     fill_in(:user_full_name, with: 'Joe Bloggs')
     within_frame(find('iframe')) do
-      #find('form.ElementsApp').click
       find('input[name="cardnumber"]').set('4000000000000002')
       find('input[name="exp-date"]').set('0122')
       find('input[name="cvc"]').set('123')
       find('input[name="postal"]').set('12345')
-
     end
     click_button('Sign Up')
   end
