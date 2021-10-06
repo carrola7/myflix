@@ -12,7 +12,7 @@ gem 'pg', '~> 0.11'
 gem 'bcrypt-ruby', '~> 3.1.2' 
 gem 'bootstrap_form'
 gem 'rake', '< 11.0'
-gem 'sidekiq', '~> 4.0'
+gem 'sidekiq', '~> 5.2'
 gem 'unicorn'
 gem "sentry-raven"
 gem 'carrierwave', '~> 1.0'
